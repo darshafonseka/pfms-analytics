@@ -6,6 +6,7 @@ import com.pfms.pfms_analytics.service.FinancialReportService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class FinancialReportController {
     }
 
     @PostMapping("/report")
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Generate Financial Report", description = "Generates a financial report based on the provided request.")
     public FinancialReport generateReport(@Valid @RequestBody ReportRequest reportRequest) {
         return financialReportService.generateReport(reportRequest);
